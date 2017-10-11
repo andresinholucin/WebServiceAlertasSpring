@@ -19,10 +19,12 @@ import com.google.common.base.Preconditions;
 
 import ec.edu.upse.alertas.modelo.PerimetroSensado;
 import ec.edu.upse.alertas.modelo.TiempoSensado;
+import ec.edu.upse.alertas.modelo.TipoDiscapacidad;
 import ec.edu.upse.alertas.modelo.Usuario;
 import ec.edu.upse.alertas.modelo.UsuarioAsignado;
 import ec.edu.upse.alertas.modelo.repositorios.PerimetroRepository;
 import ec.edu.upse.alertas.modelo.repositorios.TiempoSensadoRepository;
+import ec.edu.upse.alertas.modelo.repositorios.TipoDiscapacidadRepository;
 import ec.edu.upse.alertas.modelo.repositorios.UsuarioAsignadoRepository;
 import ec.edu.upse.alertas.modelo.repositorios.UsuarioRepository;
 
@@ -38,6 +40,8 @@ public class WsUsuarioTuroreado {
 	TiempoSensadoRepository tiemposensadoRepository;
 	@Autowired
 	PerimetroRepository perimetroRepository;
+	@Autowired
+	TipoDiscapacidadRepository tipoDiscapacidadRepository;
 	
 	/*
 	 * Usuario por id
@@ -83,6 +87,17 @@ public class WsUsuarioTuroreado {
 	        ) 
 	public List<TiempoSensado> getTiempos(){
 		return tiemposensadoRepository.findAll();
+	}
+	
+	/*
+	 * lista de todos los Tipos de discapacidad para ser llenado en un combo o lista
+	 */
+	@RequestMapping(value = "/tiposdiscapacidad/", 
+	        method = RequestMethod.GET, 
+	        headers="Accept=application/json"
+	        ) 
+	public List<TipoDiscapacidad> getTipos(){
+		return tipoDiscapacidadRepository.findAll();
 	}
 	
 	/*
