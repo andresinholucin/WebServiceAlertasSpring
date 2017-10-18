@@ -106,19 +106,19 @@ public class Usuario implements Serializable {
 	//bi-directional many-to-one association to PerimetroSensado
 	@ManyToOne
 	@JoinColumn(name="idtiempo_perimetro")
-	@JsonIgnore
+	//@JsonIgnore
 	@Getter @Setter private PerimetroSensado perimetroSensado;
 
 	//bi-directional many-to-one association to TiempoSensado
 	@ManyToOne
 	@JoinColumn(name="idtiempo_sensado")
-	@JsonIgnore
+	//@JsonIgnore
 	@Getter @Setter private TiempoSensado tiempoSensado;
 
 	//bi-directional many-to-one association to TipoDiscapacidad
 	@ManyToOne
 	@JoinColumn(name="idtipo_discapacidad")
-	@JsonIgnore
+	//@JsonIgnore
 	@Getter @Setter private TipoDiscapacidad tipoDiscapacidad;
 
 	//bi-directional many-to-one association to UsuarioAsignado

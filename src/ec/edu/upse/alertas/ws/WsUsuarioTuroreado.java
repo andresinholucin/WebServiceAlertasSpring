@@ -123,7 +123,6 @@ public class WsUsuarioTuroreado {
 	
 	
 	
-	
 	/*
 	 * 10 ultimas ubicaciones del usuario -
 	 */
@@ -153,8 +152,11 @@ public class WsUsuarioTuroreado {
 	@ResponseStatus(HttpStatus.CREATED)
 	public Object registrapersona(@RequestBody Usuario usuario, HttpServletResponse response) {
 		try {
-			Preconditions.checkNotNull(usuario);     
+			
+			Preconditions.checkNotNull(usuario);
+			System.out.println(usuario);
 	        return usuariorepository.save(usuario);
+			
 		} catch (Exception e) {
 			System.out.println(e);
 			return null;
