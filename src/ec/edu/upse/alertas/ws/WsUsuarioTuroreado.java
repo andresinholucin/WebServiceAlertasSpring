@@ -120,29 +120,7 @@ public class WsUsuarioTuroreado {
 		}		
 		return usuariosTutoreados;
 	}
-	
-	
-	
-	/*
-	 * 10 ultimas ubicaciones del usuario -
-	 */
-	@RequestMapping(value = "/ultimasubicaciones/{idusuario}", 
-	        method = RequestMethod.GET, 
-	        headers="Accept=application/json"
-	        ) 
-	public List<Usuario> getUbicacionUsuario(@PathVariable Long idusuario){
-		Usuario usuariotutor= new Usuario();
-		UsuarioAsignado usuarioasignado=new UsuarioAsignado();
-		usuariotutor=usuariorepository.findOne(idusuario);
-		ArrayList<Usuario> usuariosTutoreados = new ArrayList<Usuario>();
-		for(int i=0; i<usuariotutor.getUsuarioAsignados1().size();i++){
-			Long id=usuariotutor.getUsuarioAsignados1().get(i).getIdusuarioAsignado();
-			System.out.println(id);
-			usuarioasignado=usuarioAsignadoRepository.findOne(id);
-			usuariosTutoreados.add(usuariorepository.findOne(usuarioasignado.getUsuario2().getIdusuario()));
-		}		
-		return usuariosTutoreados;
-	}
+		
 	
 	/*
 	 * grabar Usuario usando metodo post
@@ -163,6 +141,27 @@ public class WsUsuarioTuroreado {
 			// TODO: handle exception
 		}
 	}
+	
+	/*
+	 * validacion de celula si existe
+	 * devuelve true cuando la cedula si existe
+	 * devuelve false cuando la cedula no existe
+	 */
+	@RequestMapping(value = "/validacedula/{cedula}", 
+	        method = RequestMethod.GET, 
+	        headers="Accept=application/json"
+	        ) 
+	public boolean validaCedula1(@PathVariable String cedula){
+		List<String> cedulas=usuariorepository.validacedula(cedula);
+		System.out.println(usuariorepository.validacedula(cedula));
+		System.out.println(cedulas.size());
+		if (cedulas.size()>0){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
 	
 	/*
 	 * metodo post para prueba

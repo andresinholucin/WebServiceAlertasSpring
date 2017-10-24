@@ -20,5 +20,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 	@Query("SELECT u FROM Usuario u WHERE u.usuUApellidos = :apellido")
 	public List<Usuario> usuariosPorApellido(@Param("apellido") String apellido);
 	
-
+	
+	@Query("SELECT u.usuUCedula FROM Usuario u WHERE u.usuUCedula = :cedula")
+	public List<String> validacedula(@Param("cedula") String cedula);
 }
