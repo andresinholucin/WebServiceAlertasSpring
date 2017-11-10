@@ -1,23 +1,15 @@
 package ec.edu.upse.alertas.modelo;
 
 import java.io.Serializable;
-import java.util.Date;
+import javax.persistence.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.Date;
 
 
 /**
@@ -26,14 +18,14 @@ import lombok.Setter;
  */
 @Entity
 @Table(name="ubicacion_usuario")
-@NoArgsConstructor
 @NamedQuery(name="UbicacionUsuario.findAll", query="SELECT u FROM UbicacionUsuario u")
+@NoArgsConstructor
 public class UbicacionUsuario implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Getter @Setter private int idubicacion;
+	@Getter @Setter private Long idubicacion;
 
 	@Column(name="usu_ubi_ciudad")
 	@Getter @Setter private String usuUbiCiudad;
@@ -69,8 +61,9 @@ public class UbicacionUsuario implements Serializable {
 
 	//bi-directional many-to-one association to Usuario
 	@ManyToOne
+	@JsonIgnore
 	@JoinColumn(name="idusuario")
 	@Getter @Setter private Usuario usuario;
 
-	
+
 }

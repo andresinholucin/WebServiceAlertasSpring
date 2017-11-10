@@ -1,4 +1,4 @@
-package ec.edu.upse.alertas.modelo.repositorios;
+package ec.edu.upse.alertas.modelo.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

@@ -2,6 +2,13 @@ package ec.edu.upse.alertas.modelo;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.util.List;
 
 
@@ -12,27 +19,29 @@ import java.util.List;
 @Entity
 @Table(name="tipo_alerta")
 @NamedQuery(name="TipoAlerta.findAll", query="SELECT t FROM TipoAlerta t")
+
+
+@NoArgsConstructor
 public class TipoAlerta implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="idtipo_alerta")
-	private int idtipoAlerta;
+	@Getter @Setter private Long idtipoAlerta;
 
 	@Column(name="usu_tipoalerta_descripcion")
-	private String usuTipoalertaDescripcion;
+	@Getter @Setter private String usuTipoalertaDescripcion;
 
 	@Column(name="usu_tipoalerta_estado")
-	private String usuTipoalertaEstado;
+	@Getter @Setter private String usuTipoalertaEstado;
 
 	//bi-directional many-to-one association to EmisionAlerta
 	@OneToMany(mappedBy="tipoAlerta")
-	private List<EmisionAlerta> emisionAlertas;
+	@JsonIgnore
+	@Getter @Setter private List<EmisionAlerta> emisionAlertas;
 
-	public TipoAlerta() {
-	}
-
+	/*
 	public int getIdtipoAlerta() {
 		return this.idtipoAlerta;
 	}
@@ -77,6 +86,6 @@ public class TipoAlerta implements Serializable {
 		emisionAlerta.setTipoAlerta(null);
 
 		return emisionAlerta;
-	}
+	}*/
 
 }

@@ -1,22 +1,8 @@
 package ec.edu.upse.alertas.modelo;
 
 import java.io.Serializable;
+import javax.persistence.*;
 import java.util.Date;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQuery;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 
 /**
@@ -26,25 +12,66 @@ import lombok.Setter;
 @Entity
 @Table(name="notificaciones")
 @NamedQuery(name="Notificacione.findAll", query="SELECT n FROM Notificacione n")
-@NoArgsConstructor
 public class Notificacione implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Getter @Setter private Long idnotificaciones;
+	private int idnotificaciones;
 
-	@Getter @Setter private String descripcion;
+	private String descripcion;
 
-	@Getter @Setter private String estado;
+	private String estado;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Getter @Setter private Date fecha;
+	private Date fecha;
 
 	//bi-directional many-to-one association to Usuario
 	@ManyToOne
 	@JoinColumn(name="idusuariox")
-	@Getter @Setter private Usuario usuario;
+	private Usuario usuario;
 
-	
+	public Notificacione() {
+	}
+
+	public int getIdnotificaciones() {
+		return this.idnotificaciones;
+	}
+
+	public void setIdnotificaciones(int idnotificaciones) {
+		this.idnotificaciones = idnotificaciones;
+	}
+
+	public String getDescripcion() {
+		return this.descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+
+	public String getEstado() {
+		return this.estado;
+	}
+
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
+
+	public Date getFecha() {
+		return this.fecha;
+	}
+
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
+	}
+
+	public Usuario getUsuario() {
+		return this.usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
 }

@@ -1,6 +1,4 @@
 package ec.edu.upse.alertas.ws;
-
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,16 +20,16 @@ import ec.edu.upse.alertas.modelo.TiempoSensado;
 import ec.edu.upse.alertas.modelo.TipoDiscapacidad;
 import ec.edu.upse.alertas.modelo.Usuario;
 import ec.edu.upse.alertas.modelo.UsuarioAsignado;
-import ec.edu.upse.alertas.modelo.repositorios.PerimetroRepository;
-import ec.edu.upse.alertas.modelo.repositorios.TiempoSensadoRepository;
-import ec.edu.upse.alertas.modelo.repositorios.TipoDiscapacidadRepository;
-import ec.edu.upse.alertas.modelo.repositorios.UsuarioAsignadoRepository;
-import ec.edu.upse.alertas.modelo.repositorios.UsuarioRepository;
+import ec.edu.upse.alertas.modelo.repository.PerimetroRepository;
+import ec.edu.upse.alertas.modelo.repository.TiempoSensadoRepository;
+import ec.edu.upse.alertas.modelo.repository.TipoDiscapacidadRepository;
+import ec.edu.upse.alertas.modelo.repository.UsuarioAsignadoRepository;
+import ec.edu.upse.alertas.modelo.repository.UsuarioRepository;
 
 
 @RestController 
 @RequestMapping(value="/usuariotutoreado")
-public class WsUsuarioTuroreado {
+public class WsUsuarioTutoreado {
 	@Autowired
 	UsuarioRepository usuariorepository;
 	@Autowired
@@ -181,6 +179,5 @@ public class WsUsuarioTuroreado {
 		}
 	}
 	
-	
-	
+
 }

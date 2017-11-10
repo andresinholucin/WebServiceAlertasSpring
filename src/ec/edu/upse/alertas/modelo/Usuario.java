@@ -13,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.Max;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -30,9 +31,7 @@ import lombok.Setter;
 @Entity
 @NamedQueries({
 	@NamedQuery(name="Usuario.usuariosConCriterio", 
-            	query="SELECT u FROM Usuario u WHERE u.usuUUsuario = ?1 "),
-	@NamedQuery(name="Usuario.usuariosConCriterio1", 
-    			query="SELECT u FROM Usuario u WHERE u.usuUUsuario = ?1 ")
+            	query="SELECT u FROM Usuario u WHERE u.usuUUsuario = ?1 ")
 	}
 )
  
@@ -90,7 +89,7 @@ public class Usuario implements Serializable {
 
 	//bi-directional many-to-one association to Notificacione
 	@OneToMany(mappedBy="usuario")
-	@JsonIgnore 
+	@JsonIgnore  
 	@Getter @Setter private List<Notificacione> notificaciones;
 
 	//bi-directional many-to-one association to RolesUsuario
@@ -128,21 +127,7 @@ public class Usuario implements Serializable {
 
 	//bi-directional many-to-one association to UsuarioAsignado
 	@OneToMany(mappedBy="usuario2")
-	@JsonIgnore
+    @JsonIgnore
 	@Getter @Setter private List<UsuarioAsignado> usuarioAsignados2;
 
-	@Override
-	public String toString() {
-		return "Usuario [idusuario=" + idusuario + ", usuUAnio=" + usuUAnio + ", usuUApellidos=" + usuUApellidos
-				+ ", usuUCedula=" + usuUCedula + ", usuUClave=" + usuUClave + ", usuUCorreo=" + usuUCorreo
-				+ ", usuUDia=" + usuUDia + ", usuUDireccion=" + usuUDireccion + ", usuUEstado=" + usuUEstado
-				+ ", usuUMes=" + usuUMes + ", usuUNombres=" + usuUNombres + ", usuUSms=" + usuUSms + ", usuUTelefono="
-				+ usuUTelefono + ", usuUUsuario=" + usuUUsuario + ", emisionAlertas=" + emisionAlertas
-				+ ", notificaciones=" + notificaciones + ", rolesUsuarios=" + rolesUsuarios + ", ubicacionUsuarios="
-				+ ubicacionUsuarios + ", perimetroSensado=" + perimetroSensado + ", tiempoSensado=" + tiempoSensado
-				+ ", tipoDiscapacidad=" + tipoDiscapacidad + ", usuarioAsignados1=" + usuarioAsignados1
-				+ ", usuarioAsignados2=" + usuarioAsignados2 + "]";
-	}
-
-	
 }
