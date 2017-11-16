@@ -13,11 +13,13 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import com.google.common.base.Preconditions;
 
+import ec.edu.upse.alertas.config.AuxDevolucion;
 import ec.edu.upse.alertas.modelo.MetodosGenerales;
 import ec.edu.upse.alertas.modelo.UbicacionUsuario;
 import ec.edu.upse.alertas.modelo.Usuario;
 import ec.edu.upse.alertas.modelo.UsuarioAsignado;
 import ec.edu.upse.alertas.modelo.repository.UsuarioAsignadoRepositorio;
+import ec.edu.upse.alertas.modelo.repository.UsuarioAsignadoRepository;
 import ec.edu.upse.alertas.modelo.repository.UsuarioRepository;
 
 /**
@@ -33,9 +35,12 @@ public class WsUsuario {
 	// que contiene todoslos metods CRUD
 	@Autowired
 	UsuarioRepository usuarioRepository;
-
+	
 	@Autowired
-	UsuarioAsignadoRepositorio usuarioAsignadoRepositorio;
+	UsuarioAsignadoRepository usuarioAsignadoRepository;
+
+	//@Autowired
+	//UsuarioAsignadoRepositorio usuarioAsignadoRepositorio;
 	
 	@RequestMapping(value = "/buscaPorId/{id}", 
 	        method = RequestMethod.GET, 
@@ -48,18 +53,73 @@ public class WsUsuario {
 	 * retorna el id del usuario cuando inicia sesion
 	 * @return
 	 */
-	
+	/*
 	@RequestMapping(value = "/login/{usuario}/{clave}", 
 	        method = RequestMethod.GET,
 	        headers="Accept=application/json") 
 	public Long getLoginUsurio (@PathVariable String usuario,@PathVariable String clave) {
-		//MetodosGenerales generales = new MetodosGenerales();
-		//String encriptado = generales.cryptMD5(clave);
+		 
 		System.out.println(usuario +" - "+clave);
 		
-		return usuarioRepository.loginUsuario(usuario,clave);
+		Usuario usu = new Usuario();
+		//UsuarioAsignado usuarioAsignado = new UsuarioAsignado();
+		Long id = usuarioRepository.loginUsuario(usuario,clave);
+		
+		usu = usuarioRepository.findOne(id);
+		
+	    List<Long> lstUsuario = new ArrayList<>(); 
+	    
+	    lstUsuario=usuarioAsignadoRepository.loginUsuarioAsignado(usu);
+	    
+	    if (lstUsuario.size()!=0)
+	    	return (long) 1;	    	
+	    else
+	    	return (long) 2;
+	    
+	    //return usuarioRepository.loginUsuario(usuario,clave);
 	}
+	*/
 	
+	
+	/**
+	 * retorna la clase AuxDevolucion que contiene el id del usuario y el tipo si es tutor o tutoreado
+	 * 1 tutor 2 tutoredo
+	 * @return
+	 */
+	
+	@RequestMapping(value = "/login/{usuario}/{clave}", 
+	        method = RequestMethod.GET,
+	        headers="Accept=application/json") 
+	public AuxDevolucion getLoginUsurio (@PathVariable String usuario,@PathVariable String clave) {
+		Usuario usu = new Usuario();
+		
+		AuxDevolucion auxIdTipo=new AuxDevolucion();
+		//UsuarioAsignado usuarioAsignado = new UsuarioAsignado();
+		Long id = usuarioRepository.loginUsuario(usuario,clave);
+		System.out.println(id);
+		if (id!= null){
+			usu = usuarioRepository.findOne(id);
+		    List<Long> lstUsuario = new ArrayList<>(); 
+		    lstUsuario=usuarioAsignadoRepository.loginUsuarioAsignado(usu);
+		    auxIdTipo.setIdUsuario(id);
+		    
+		    if (lstUsuario.size()!=0)
+		    	auxIdTipo.setTipoUsuario((long)1);	    	
+		    else
+		    	auxIdTipo.setTipoUsuario((long)2);
+		    
+		    System.out.println(auxIdTipo);
+		   
+		}
+		else{
+			auxIdTipo.setIdUsuario(null);
+			auxIdTipo.setTipoUsuario(null);
+		}
+			
+		
+		
+	    return auxIdTipo;
+	}
 	
 	/**
 	 * retorna la lista de usuarios sin relaciones
@@ -144,7 +204,7 @@ public class WsUsuario {
         
             Long id=usuariotutor.getUsuarioAsignados1().get(i).getIdusuarioAsignado();
             
-            usuarioasignado=usuarioAsignadoRepositorio.findOne(id);
+            usuarioasignado=usuarioAsignadoRepository.findOne(id);
             milista.add(usuarioRepository.findOne(usuarioasignado.getUsuario2().getIdusuario()));
            // milista.add(usuarioasignado.getUsuario2());
             System.out.println("imprime lista : "+ milista.get(i).getUsuUNombres());  

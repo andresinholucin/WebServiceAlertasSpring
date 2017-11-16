@@ -41,6 +41,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 	public Long loginUsuario(@Param("usuario") String usuario,@Param("clave") String clave);
 	// Asi voy adicionando mas metodos que necesite.	
 	//void update(Usuario usuario);
+	
 	@Query("SELECT u.usuUCedula FROM Usuario u WHERE u.usuUCedula = :cedula")
-	public List<String> validacedula(@Param("cedula") String cedula);
+	public List<String> validacedula(@Param("cedula")String cedula);
 }

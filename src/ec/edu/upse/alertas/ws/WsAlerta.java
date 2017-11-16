@@ -3,6 +3,7 @@ package ec.edu.upse.alertas.ws;
 import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
@@ -39,12 +40,15 @@ import ec.edu.upse.alertas.modelo.UsuarioAsignado;
 import ec.edu.upse.alertas.modelo.TipoAlerta;
 import ec.edu.upse.alertas.modelo.repository.AlertaRepository;
 import ec.edu.upse.alertas.modelo.repository.UsuarioRepository;
+import ec.edu.upse.alertas.notificaciones.PushNotificacion;
 
 @RestController 
 
 
 @RequestMapping(value="/emisionAlerta")
 public class WsAlerta {
+	
+	PushNotificacion notificaciones2 = new PushNotificacion();
 	@Autowired
 	UsuarioRepository usuarioRepository ;
 	
@@ -57,6 +61,7 @@ public class WsAlerta {
 	        headers="Accept=application/json") 
 	@JsonTypeInfo(include=As.WRAPPER_OBJECT, use=Id.NAME) 
 	public EmisionAlerta getEmisionAlerta(@PathVariable long id) {
+
 		return alertaRepository.findOne(id);
 	}
 	
@@ -79,6 +84,7 @@ public class WsAlerta {
 		System.out.println(usuario2.getUsuUNombres());
 		//return usuario2.getUsuUNombres();
 		System.out.println("imprime lista : "+ alertaRepository.emisionAlertaPorUsuario(usuario2)); 
+		
 		return alertaRepository.emisionAlertaPorUsuario(usuario2);
 		
     }
@@ -116,9 +122,8 @@ public class WsAlerta {
 		return alertaRepository.emisionAlertaPorUsuario(usuario2);*/
 		  
 	}
-		
 	
-	 @RequestMapping(value = "/listaAlerta/{idusuario}", 
+	 @RequestMapping(value = "/udt/{idusuario}", 
 	            method = RequestMethod.GET, 
 	            headers="Accept=application/json"
 	            ) 
@@ -151,7 +156,7 @@ public class WsAlerta {
 			alertaRepository.delete(id);
 	}
 	
-	@RequestMapping(value="/guarda/{cadena}", 
+	/*@RequestMapping(value="/guarda/{cadena}", 
 		    method= RequestMethod.GET)
 			public Object getGuardarByJson(@PathVariable("cadena") String todoId) {
 				
@@ -169,7 +174,7 @@ public class WsAlerta {
 				alertaRepository.save(dato);
 				return (dato.toString());
 
-	}	
+	}*/	
 	
 	
 	@RequestMapping(value = "/guardapost/", 
@@ -177,8 +182,16 @@ public class WsAlerta {
 	@ResponseStatus(HttpStatus.CREATED)
 	public Object registrapersonaprueba(@RequestBody EmisionAlerta emisionAlerta, HttpServletResponse response) {
 		try {
-			Preconditions.checkNotNull(emisionAlerta);
-			System.out.println(emisionAlerta);
+			//Preconditions.checkNotNull(emisionAlerta);
+			Date fecha= new Date();
+			emisionAlerta.setUsuAlerFecha(fecha);
+			alertaRepository.save(emisionAlerta);
+			notificaciones2.send();
+			System.out.println(emisionAlerta.getUsuario().getIdusuario().toString());
+			String usuario = emisionAlerta.getUsuario().getIdusuario().toString();
+			notificaciones2.sendUsuario(usuario);
+			//notificaciones.pushFCMNotification("cjUE9iy6y1Q:APA91bElOnDP-PjLYM26lbxSVMtWIfRjBCYs4d0Ry3Im6Zz-nQn6GbM3dbP3pUCe1ur1ikLrqpv2KvxgGL5MzdNQ094rje4YXT1p-bsKJV4jdrCS523iqdT6RfiSDCTSdjCVD_4AQWKZ", "hola", "hola");	
+			System.out.println(emisionAlerta.getUsuAlerPais());
 	        return emisionAlerta;
 		} catch (Exception e) {
 			System.out.println(e);
