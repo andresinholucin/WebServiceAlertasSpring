@@ -106,8 +106,8 @@ public class WsUsuarioTutoreado {
 	        headers="Accept=application/json"
 	        ) 
 	public List<Usuario> getUsuariosDelTutor(@PathVariable Long idusuario){
-		Usuario usuariotutor= new Usuario();
-		UsuarioAsignado usuarioasignado=new UsuarioAsignado();
+		Usuario usuariotutor;
+		UsuarioAsignado usuarioasignado;
 		usuariotutor=usuariorepository.findOne(idusuario);
 		ArrayList<Usuario> usuariosTutoreados = new ArrayList<Usuario>();
 		for(int i=0; i<usuariotutor.getUsuarioAsignados1().size();i++){
@@ -157,6 +157,49 @@ public class WsUsuarioTutoreado {
 			return true;
 		}else{
 			return false;
+		}
+	}
+	/*
+	 * Lista de usuarios con su tutor asignado
+	 */
+	@RequestMapping(value = "/usuarioasignado/", 
+	        method = RequestMethod.GET, 
+	        headers="Accept=application/json"
+	        ) 
+	public List<UsuarioAsignado> getUsuariosAsignados(){	
+		return usuarioAsignadoRepository.findAll();
+	}
+	
+	/*
+	 * usuario asignado por id
+	 */
+	@RequestMapping(value = "/usuarioasignado/{idusuario}", 
+	        method = RequestMethod.GET, 
+	        headers="Accept=application/json"
+	        ) 
+	public UsuarioAsignado getUsuarioAsignado(@PathVariable Long idusuario){
+		System.out.println(idusuario);
+		return usuarioAsignadoRepository.findOne(idusuario);
+	}
+	
+	/*
+	 * guardar un usuario asignado paso de parametros del los objetos usuarios
+	 * 
+	 */
+	@RequestMapping(value = "/registraUsuarioAsignado/", 
+	        method = RequestMethod.POST) 
+	@ResponseStatus(HttpStatus.CREATED)
+	public Object registraUsuarioAsignado(@RequestBody UsuarioAsignado ua, HttpServletResponse response) {
+		try {
+			
+			Preconditions.checkNotNull(ua);
+			System.out.println(ua.toString());
+	        return usuarioAsignadoRepository.save(ua);
+			
+		} catch (Exception e) {
+			System.out.println(e);
+			return null;
+			// TODO: handle exception
 		}
 	}
 	

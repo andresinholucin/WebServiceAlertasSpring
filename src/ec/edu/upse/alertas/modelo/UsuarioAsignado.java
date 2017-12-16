@@ -2,6 +2,7 @@ package ec.edu.upse.alertas.modelo;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -40,14 +41,21 @@ public class UsuarioAsignado implements Serializable {
 	//bi-directional many-to-one association to Usuario
 	@ManyToOne
 	@JoinColumn(name="idtutor")
-	@JsonIgnore
+	//@JsonIgnore
 	@Getter @Setter private Usuario usuario1;
 
 	//bi-directional many-to-one association to Usuario
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name="idusuario")
-	@JsonIgnore
+	//@JsonIgnore
 	@Getter @Setter private Usuario usuario2;
 
+	@Override
+	public String toString() {
+		return "UsuarioAsignado [idusuarioAsignado=" + idusuarioAsignado + ", estado=" + estado + ", usuario1="
+				+ usuario1 + ", usuario2=" + usuario2 + "]";
+	}
+
+	
 	
 }

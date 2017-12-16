@@ -18,7 +18,6 @@ import ec.edu.upse.alertas.modelo.MetodosGenerales;
 import ec.edu.upse.alertas.modelo.UbicacionUsuario;
 import ec.edu.upse.alertas.modelo.Usuario;
 import ec.edu.upse.alertas.modelo.UsuarioAsignado;
-import ec.edu.upse.alertas.modelo.repository.UsuarioAsignadoRepositorio;
 import ec.edu.upse.alertas.modelo.repository.UsuarioAsignadoRepository;
 import ec.edu.upse.alertas.modelo.repository.UsuarioRepository;
 

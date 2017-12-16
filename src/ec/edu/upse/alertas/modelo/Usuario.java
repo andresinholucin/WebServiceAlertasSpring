@@ -34,7 +34,6 @@ import lombok.Setter;
             	query="SELECT u FROM Usuario u WHERE u.usuUUsuario = ?1 ")
 	}
 )
- 
 @NoArgsConstructor
 public class Usuario implements Serializable {
 	private static final long serialVersionUID = 1L;
