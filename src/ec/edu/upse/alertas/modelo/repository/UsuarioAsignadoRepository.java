@@ -24,5 +24,7 @@ public interface UsuarioAsignadoRepository extends JpaRepository<UsuarioAsignado
 	@Query("SELECT u.usuario1 FROM UsuarioAsignado u WHERE u.usuario1 = :usuario AND u.estado='A'")
 	public List<Long> loginUsuarioAsignado(@Param("usuario") Usuario usuario);
 	
+	@Query("SELECT u FROM UsuarioAsignado u WHERE u.usuario1.idusuario = :usuario AND u.estado='A'")
+	public List<UsuarioAsignado> usuasignado(@Param("usuario") Long usuario);
 	
 }

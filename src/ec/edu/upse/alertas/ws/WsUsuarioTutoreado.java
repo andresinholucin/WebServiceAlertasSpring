@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.jasper.tagplugins.jstl.core.ForEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -184,7 +185,7 @@ public class WsUsuarioTutoreado {
 	
 	/*
 	 * guardar un usuario asignado paso de parametros del los objetos usuarios
-	 * 
+	 * el tutor y el usuaro
 	 */
 	@RequestMapping(value = "/registraUsuarioAsignado/", 
 	        method = RequestMethod.POST) 
@@ -202,6 +203,24 @@ public class WsUsuarioTutoreado {
 			// TODO: handle exception
 		}
 	}
+	
+	/*
+	 * lista de usuarios por tutor usando el repository usuasignado
+	 */
+	@RequestMapping(value = "/listausuarioasignado/{usuario}", 
+	        method = RequestMethod.GET, 
+	        headers="Accept=application/json"
+	        ) 
+	public List<Usuario> getlistaUsuarioAsignado(@PathVariable Long usuario){
+		System.out.println(usuario);
+		List<UsuarioAsignado> ua= usuarioAsignadoRepository.usuasignado(usuario);
+		ArrayList<Usuario> usu=new ArrayList<Usuario>();	
+		for(int i=0; i<ua.size();i++){
+			usu.add(ua.get(i).getUsuario2());
+		}	
+		return usu;
+	}
+	
 	
 	
 	/*
